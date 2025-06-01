@@ -1,23 +1,37 @@
-import { Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import CreateMovie from './pages/Create';
-import NowPlaying from './pages/NowPlaying';
-// import Hello from './components/Hello'
+import { useState } from 'react'
+import Hello from './components/Hello'
+// import './App.css'
+import Home from './pages/Home'
+import { Route, Routes } from 'react-router-dom'
+import NowPlaying from './pages/NowPlaying'
+import CreateMovie from './pages/Create'
+import Layout from './Layout/index'
+import TopRatedMovie from './pages/TopRated'
+import PopularMovie from './pages/Popular'
+import Counter from './components/Counter/Counter'
+
 // import './App.css'
 
 
+
 function App() {
+
+  const [count, setCount] = useState(0)
   return (
-    <div>
-      {/* <Home /> */}
-      <Routes>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/movie/create' element={<CreateMovie />}></Route>
-        <Route path='/movie/now' element={<NowPlaying />}></Route>
-      </Routes>
-     
-      
-    </div>
+  <>
+
+ <Layout>
+    <Routes>
+      <Route path='/' element={<Home />}></Route>
+      <Route path="/movie/create" element={<CreateMovie />} />
+      <Route path="/movie/now" element={<NowPlaying />} />
+      <Route path="/movie/top" element={<TopRatedMovie />} />
+      <Route path="/movie/popular" element={<PopularMovie />} />
+      <Route path="/counter" element={<Counter />} />
+    </Routes>
+    </Layout>
+
+  </>
   )
 }
 

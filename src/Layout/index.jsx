@@ -1,7 +1,7 @@
 // import { Route, Routes } from "react-router-dom";
 // import Home from "../../pages/Home";
-import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
 
 function Layout({ children }) {
     return (
