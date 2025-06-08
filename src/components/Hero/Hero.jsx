@@ -1,6 +1,7 @@
 // import styles from "./Hero.module.css";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const HeroStyled = styled.div`
   margin: 1rem;
@@ -78,54 +79,78 @@ const HeroImage = styled.img`
 
 
 function Hero() {
-    const [movie, setMovie] = useState({});
+  const [movie, setMovie] = useState({});
 
-    useEffect(() => {
-        async function fetchMovie() {
-            const url = "https://www.omdbapi.com/?apikey=fcf50ae6&i=tt2975590";
-            const response = await fetch(url);
-            const data = await response.json();
-            setMovie(data);
-        }
+  useEffect(()=>{
+    async function fetchTrendingMovies() {
+      const API_KEY = import.meta.env.VITE_API_KEY;
+      const URL = `https://api.themoviedb.org/3/trending/movie/day?api_key${API_KEY}`;
+      const response = await axios(URL);
+      const firstMovie = response.data.results[0];
+      return firstMovie;
+      
+    }
+    async function fetchDetailMovie() {
+      const trendingMovie = await fetchTrendingMovies();
+      const id = trendingMovie.id;
 
-        fetchMovie();
-    }, []);
+      const params = `?api_key=${API_KEY}&append_to_response=videos`;
+      const URL = `https://api.themoviedb.org/3/movie/${id}${params}`;
+      const response = await axios(URL);
 
-    return (
-        <HeroStyled>
-        <HeroSection>
-            <HeroLeft>
-            <HeroTitle>{movie.Title}</HeroTitle>
-            <HeroGenre>Genre: {movie.Genre}</HeroGenre>
-            <HeroDescription>{movie.Plot}</HeroDescription>
-            <HeroButton>Watch</HeroButton>
-            </HeroLeft>
-            <HeroRight>
-            <HeroImage src={movie.Poster} alt={movie.Title} />
-            </HeroRight>
-        </HeroSection>
-        </HeroStyled>
-        // <div className={styles.container}>
-        //     <section className={styles.hero}>
-        //         <div className={styles.hero__left}>
-        //             <h2 className={styles.hero__title}> {movie.Title}</h2>
-        //             <h3 className={styles.hero__genre}>
-        //                 Genre: {movie.Genre}
-        //             </h3>
-        //             <p className={styles.hero__description}>
-        //                 {movie.Plot}
-        //             </p>
-        //             <button className={styles.hero__button}>Watch</button>
-        //         </div>
-        //         <div className={styles.hero__right}>
-        //             <img className={styles.hero__image} 
-        //             src={movie.Poster} 
-        //             alt={movie.Title} />
+      setMovie(response.data);
+    }
+    fetchDetailMovie
 
-        //         </div>
-                
-        //     </section>
-        // </div>
+    fetchTrendingMovies();
+  }, []);
+
+  useEffect(() => {
+    async function fetchMovie() {
+      const url = "https://www.omdbapi.com/?apikey=fcf50ae6&i=tt2975590";
+      const response = await fetch(url);
+      const data = await response.json();
+      setMovie(data);
+    }
+
+      fetchMovie();
+  }, []);
+
+  return (
+      <HeroStyled>
+      <HeroSection>
+          <HeroLeft>
+          <HeroTitle>{movie.Title}</HeroTitle>
+          <HeroGenre>Genre: {movie.Genre}</HeroGenre>
+          <HeroDescription>{movie.Plot}</HeroDescription>
+          <HeroButton>Watch</HeroButton>
+          </HeroLeft>
+          <HeroRight>
+          <HeroImage src={movie.Poster} alt={movie.Title} />
+          </HeroRight>
+      </HeroSection>
+      </HeroStyled>
+      // <div className={styles.container}>
+      //     <section className={styles.hero}>
+      //         <div className={styles.hero__left}>
+      //             <h2 className={styles.hero__title}> {movie.Title}</h2>
+      //             <h3 className={styles.hero__genre}>
+      //                 Genre: {movie.Genre}
+      //             </h3>
+      //             <p className={styles.hero__description}>
+      //                 {movie.Plot}
+      //             </p>
+      //             <button className={styles.hero__button}>Watch</button>
+      //         </div>
+      //         <div className={styles.hero__right}>
+      //             <img className={styles.hero__image} 
+      //             src={movie.Poster} 
+      //             alt={movie.Title} />
+
+      //         </div>
+              
+      //     </section>
+      // </div>
     );
 }
 
