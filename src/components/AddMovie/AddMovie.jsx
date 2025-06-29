@@ -1,20 +1,25 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Alert from "../Alert/Alert";
 import styles from "./Addmovie.module.css";
+import { useNavigate } from "react-router-dom";
+import MoviesContex from "../context/MoviesContext";
 
-function AddMovieForm(props) {
+function AddMovieForm() {
+  const {movies, setMovies} = useContext(MoviesContex);
+  const navigation = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     date: "",
   });
 
+  
   // Gunakan satu objek error (tanpa 's')
   const [error, setError] = useState({
     title: false,
     date: false,
   });
 
-  const { movies, setMovies } = props;
+  // const { movies, setMovies } = props;
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -53,6 +58,7 @@ function AddMovieForm(props) {
     };
 
     setMovies([...movies, movie]);
+    navigation("/");
 
     // Clear input setelah submit
     setFormData({ title: "", date: "" });
