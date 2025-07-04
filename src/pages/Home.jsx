@@ -1,12 +1,12 @@
-import { useState } from "react";
+// import { useState } from "react";
 // import Navbar from "../components/Navbar/Navbar";
 import Hero from "../components/Hero/Hero";
-import Footer from "../components/Footer/Footer";
+import Footer from "../components/footer/Footer";
 import Movies from "../components/Movies/Movies";
 import Counter from "../components/Counter";
 import AddMovie from "../components/AddMovie/AddMovie";
-import data from "../utils/constants/data";
-import Button from "../components/UI/button/Index";
+// import data from "../utils/constants/data";
+import Button from "../components/UI/Button/Index";
 // import Button from "../components/UI/Button/Index";
 
 
